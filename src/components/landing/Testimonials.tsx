@@ -1,7 +1,17 @@
-import { testimonials } from "@/data/mockData";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { Star, Quote } from "lucide-react";
 
 const Testimonials = () => {
+  const { data: testimonials = [] } = useQuery({
+    queryKey: ["testimonials"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("testimonials").select("*");
+      if (error) throw error;
+      return data;
+    },
+  });
+
   return (
     <section id="testimonios" className="py-20 bg-gradient-hero relative overflow-hidden">
       <div className="absolute inset-0 grid-tech opacity-20" />
@@ -16,10 +26,10 @@ const Testimonials = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {testimonials.map((t, i) => (
+          {testimonials.map((t) => (
             <div
               key={t.id}
-              className={`animate-fade-up delay-${(i + 1) * 200} p-6 rounded-xl bg-navy-light/40 border border-navy-light/30 backdrop-blur-sm`}
+              className="p-6 rounded-xl bg-navy-light/40 border border-navy-light/30 backdrop-blur-sm"
             >
               <Quote className="h-8 w-8 text-gold/30 mb-4" />
               <p className="text-primary-foreground/70 text-sm mb-4 italic">"{t.text}"</p>

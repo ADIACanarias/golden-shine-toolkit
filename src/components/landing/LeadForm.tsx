@@ -5,7 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Send } from "lucide-react";
-import { services } from "@/data/mockData";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const LeadForm = () => {
   const { toast } = useToast();
@@ -19,18 +20,45 @@ const LeadForm = () => {
     message: "",
   });
 
+  const { data: services = [] } = useQuery({
+    queryKey: ["services"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("services")
+        .select("*")
+        .eq("is_active", true);
+      if (error) throw error;
+      return data;
+    },
+  });
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    // Mock submit — will be replaced with Supabase
-    await new Promise((r) => setTimeout(r, 1000));
-
-    toast({
-      title: "¡Solicitud enviada!",
-      description: "Nos pondremos en contacto contigo en menos de 24 horas.",
+    const { error } = await supabase.from("leads").insert({
+      name: form.name,
+      email: form.email,
+      phone: form.phone || null,
+      company: form.company || null,
+      service_interest: form.service_interest || null,
+      message: form.message || null,
+      source: "web",
     });
-    setForm({ name: "", email: "", phone: "", company: "", service_interest: "", message: "" });
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: "No se pudo enviar la solicitud. Inténtalo de nuevo.",
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "¡Solicitud enviada!",
+        description: "Nos pondremos en contacto contigo en menos de 24 horas.",
+      });
+      setForm({ name: "", email: "", phone: "", company: "", service_interest: "", message: "" });
+    }
     setLoading(false);
   };
 
@@ -47,7 +75,7 @@ const LeadForm = () => {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4 animate-fade-up">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid md:grid-cols-2 gap-4">
               <Input
                 placeholder="Nombre completo *"

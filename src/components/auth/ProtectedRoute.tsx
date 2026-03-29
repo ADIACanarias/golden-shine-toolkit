@@ -1,9 +1,34 @@
+import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+  const [loading, setLoading] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
 
-  if (!isAuthenticated) {
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setAuthenticated(!!session);
+      setLoading(false);
+    });
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setAuthenticated(!!session);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-surface">
+        <div className="animate-spin h-8 w-8 border-4 border-gold border-t-transparent rounded-full" />
+      </div>
+    );
+  }
+
+  if (!authenticated) {
     return <Navigate to="/login" replace />;
   }
 

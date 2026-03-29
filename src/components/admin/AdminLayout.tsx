@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavLink as RouterNavLink, Outlet, useNavigate } from "react-router-dom";
 import { LayoutDashboard, Users, UserCheck, Settings, BarChart3, LogOut, Zap, Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 
 const navItems = [
   { label: "Dashboard", to: "/admin", icon: LayoutDashboard },
@@ -15,14 +15,13 @@ const AdminLayout = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
     navigate("/login");
   };
 
   return (
     <div className="min-h-screen flex bg-surface">
-      {/* Sidebar */}
       <aside
         className={`fixed inset-y-0 left-0 z-40 w-64 bg-navy transform transition-transform duration-300 lg:relative lg:translate-x-0 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
@@ -72,12 +71,10 @@ const AdminLayout = () => {
         </div>
       </aside>
 
-      {/* Overlay */}
       {sidebarOpen && (
         <div className="fixed inset-0 z-30 bg-navy-dark/50 lg:hidden" onClick={() => setSidebarOpen(false)} />
       )}
 
-      {/* Main */}
       <div className="flex-1 flex flex-col min-w-0">
         <header className="h-14 bg-card border-b border-border flex items-center px-4 gap-3">
           <button className="lg:hidden text-foreground" onClick={() => setSidebarOpen(true)}>

@@ -1,4 +1,5 @@
-import { leads, clients } from "@/data/mockData";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { Users, DollarSign, TrendingUp, UserCheck } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { Badge } from "@/components/ui/badge";
@@ -21,29 +22,57 @@ const statusLabels: Record<string, string> = {
   lost: "Perdido",
 };
 
-const monthlyData = [
-  { month: "Oct", leads: 12 },
-  { month: "Nov", leads: 18 },
-  { month: "Dic", leads: 15 },
-  { month: "Ene", leads: 22 },
-  { month: "Feb", leads: 28 },
-  { month: "Mar", leads: leads.length },
-];
-
 const Dashboard = () => {
-  const mrr = clients.reduce((sum, c) => sum + c.mrr, 0);
+  const { data: leads = [] } = useQuery({
+    queryKey: ["admin-leads"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("leads").select("*").order("created_at", { ascending: false });
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: clients = [] } = useQuery({
+    queryKey: ["admin-clients"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("clients").select("*");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const mrr = clients.reduce((sum, c) => sum + Number(c.mrr), 0);
+  const conversionRate = leads.length > 0 ? Math.round((clients.length / leads.length) * 100) : 0;
+
   const kpis = [
     { label: "Total Leads", value: leads.length, icon: Users, color: "text-blue-500" },
     { label: "Clientes Activos", value: clients.length, icon: UserCheck, color: "text-emerald-500" },
     { label: "MRR", value: `${mrr}€`, icon: DollarSign, color: "text-gold" },
-    { label: "Tasa Conversión", value: `${Math.round((clients.length / leads.length) * 100)}%`, icon: TrendingUp, color: "text-purple-500" },
+    { label: "Tasa Conversión", value: `${conversionRate}%`, icon: TrendingUp, color: "text-purple-500" },
   ];
+
+  // Group leads by month
+  const monthlyData = (() => {
+    const months: Record<string, number> = {};
+    leads.forEach((l) => {
+      const d = new Date(l.created_at);
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+      months[key] = (months[key] || 0) + 1;
+    });
+    return Object.entries(months)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .slice(-6)
+      .map(([key, count]) => {
+        const [y, m] = key.split("-");
+        const monthNames = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+        return { month: monthNames[parseInt(m) - 1], leads: count };
+      });
+  })();
 
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
 
-      {/* KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {kpis.map((kpi, i) => (
           <div key={i} className="p-5 rounded-xl bg-card border border-border shadow-card">
@@ -58,7 +87,6 @@ const Dashboard = () => {
         ))}
       </div>
 
-      {/* Chart */}
       <div className="p-5 rounded-xl bg-card border border-border shadow-card">
         <h3 className="font-semibold text-foreground mb-4">Leads por Mes</h3>
         <ResponsiveContainer width="100%" height={280}>
@@ -66,20 +94,12 @@ const Dashboard = () => {
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(214 30% 91%)" />
             <XAxis dataKey="month" stroke="hsl(215 10% 50%)" fontSize={12} />
             <YAxis stroke="hsl(215 10% 50%)" fontSize={12} />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: "hsl(215 55% 12%)",
-                border: "none",
-                borderRadius: "8px",
-                color: "white",
-              }}
-            />
+            <Tooltip contentStyle={{ backgroundColor: "hsl(215 55% 12%)", border: "none", borderRadius: "8px", color: "white" }} />
             <Bar dataKey="leads" fill="hsl(37 93% 54%)" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>
 
-      {/* Recent leads */}
       <div className="p-5 rounded-xl bg-card border border-border shadow-card">
         <h3 className="font-semibold text-foreground mb-4">Últimos Leads</h3>
         <div className="overflow-x-auto">

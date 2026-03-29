@@ -1,4 +1,5 @@
-import { services } from "@/data/mockData";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { MessageSquare, Globe, Users, Mail, BarChart3, Zap, Lightbulb } from "lucide-react";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -6,7 +7,17 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 };
 
 const Services = () => {
-  const activeServices = services.filter((s) => s.is_active);
+  const { data: activeServices = [] } = useQuery({
+    queryKey: ["services"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("services")
+        .select("*")
+        .eq("is_active", true);
+      if (error) throw error;
+      return data;
+    },
+  });
 
   return (
     <section id="servicios" className="py-20">
@@ -26,7 +37,7 @@ const Services = () => {
             return (
               <div
                 key={service.id}
-                className={`animate-fade-up delay-${(i + 1) * 100} group p-6 rounded-xl bg-card border border-border hover:border-gold/30 shadow-card hover:shadow-card-hover transition-all duration-300`}
+                className="group p-6 rounded-xl bg-card border border-border hover:border-gold/30 shadow-card hover:shadow-card-hover transition-all duration-300"
               >
                 <div className="w-12 h-12 rounded-lg bg-gradient-gold flex items-center justify-center mb-4 shadow-gold">
                   <Icon className="h-6 w-6 text-accent-foreground" />
