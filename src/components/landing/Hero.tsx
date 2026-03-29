@@ -24,7 +24,7 @@ const Hero = () => {
           width={1920}
           height={1080}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[hsl(215,60%,8%)/0.92] via-[hsl(215,55%,12%)/0.85] to-[hsl(215,55%,12%)/0.7]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy-dark/95 via-navy/90 to-navy/75" />
       </div>
 
       <div className="container mx-auto px-4 pt-28 pb-20 relative z-10">
