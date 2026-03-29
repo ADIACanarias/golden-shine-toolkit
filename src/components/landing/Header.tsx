@@ -24,7 +24,7 @@ const Header = () => {
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
         <a href="#" className="flex items-center gap-2 text-primary-foreground font-bold text-xl">
           <Zap className="h-6 w-6 text-gold" />
-          <span>Digital<span className="text-gold">Boost</span></span>
+          <span>AD <span className="text-gold">IA</span> Canarias</span>
         </a>
 
         {/* Desktop nav */}

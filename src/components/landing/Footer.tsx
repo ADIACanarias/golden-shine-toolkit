@@ -32,11 +32,11 @@ const Footer = () => {
           <div className="md:col-span-2">
             <a href="#" className="flex items-center gap-2 text-primary-foreground font-bold text-xl mb-4">
               <Zap className="h-5 w-5 text-gold" />
-              Digital<span className="text-gold">Boost</span>
+              AD <span className="text-gold">IA</span> Canarias
             </a>
             <p className="text-primary-foreground/50 text-sm max-w-md leading-relaxed">
-              Automatización digital inteligente para empresas que quieren escalar sus procesos comerciales
-              y multiplicar sus resultados.
+              Soluciones de inteligencia artificial y automatización digital para empresas en Canarias
+              que quieren escalar sus procesos y multiplicar resultados.
             </p>
           </div>
 
@@ -99,7 +99,7 @@ const Footer = () => {
 
         <div className="border-t border-navy-light/20 pt-6 text-center">
           <p className="text-primary-foreground/30 text-xs">
-            © {new Date().getFullYear()} DigitalBoost. Todos los derechos reservados.
+            © {new Date().getFullYear()} AD IA Canarias. Todos los derechos reservados.
           </p>
         </div>
       </div>

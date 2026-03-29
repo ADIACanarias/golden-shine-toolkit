@@ -41,7 +41,7 @@ const Login = () => {
         <div className="text-center mb-8">
           <a href="/" className="inline-flex items-center gap-2 text-primary-foreground font-bold text-2xl">
             <Zap className="h-7 w-7 text-gold" />
-            Digital<span className="text-gold">Boost</span>
+            AD <span className="text-gold">IA</span> Canarias
           </a>
           <p className="text-primary-foreground/50 mt-2">Panel de Administración</p>
         </div>

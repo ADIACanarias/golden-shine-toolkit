@@ -31,17 +31,17 @@ const Hero = () => {
         <div className="max-w-3xl space-y-8">
           <div className="animate-fade-up inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold/30 bg-gold/10 text-gold text-sm font-medium">
             <span className="w-2 h-2 rounded-full bg-gold animate-pulse-gold" />
-            Soluciones digitales para empresas que quieren crecer
+            Inteligencia artificial para empresas en Canarias
           </div>
 
           <h1 className="animate-fade-up delay-100 text-4xl md:text-5xl lg:text-6xl font-extrabold text-primary-foreground leading-[1.1]">
-            Impulsa tu negocio con{" "}
-            <span className="text-gradient-gold">tecnología inteligente</span>
+            Lleva tu negocio canario al{" "}
+            <span className="text-gradient-gold">siguiente nivel con IA</span>
           </h1>
 
           <p className="animate-fade-up delay-200 text-lg md:text-xl text-primary-foreground/70 max-w-2xl leading-relaxed">
             Automatizamos la captación de clientes, optimizamos tus procesos comerciales
-            y creamos experiencias digitales que generan resultados medibles para tu empresa.
+            y creamos soluciones de IA a medida para empresas en las Islas Canarias.
           </p>
 
           <div className="animate-fade-up delay-300 flex flex-wrap gap-4">
