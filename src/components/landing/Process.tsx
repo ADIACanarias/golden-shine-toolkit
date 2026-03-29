@@ -4,34 +4,42 @@ const steps = [
   {
     num: "01",
     icon: Search,
-    title: "Diagnóstico Gratuito",
-    description: "Analizamos tu negocio, tus canales digitales y tus objetivos. Identificamos las oportunidades de automatización con mayor impacto.",
+    title: "Diagnóstico",
+    subtitle: "Analizamos tu negocio",
+    description:
+      "Evaluamos tus canales digitales, flujos comerciales y oportunidades de automatización con mayor impacto en tu facturación.",
   },
   {
     num: "02",
     icon: Settings,
-    title: "Implementación a Medida",
-    description: "Diseñamos e implementamos las soluciones adaptadas a tu negocio. Chatbots, web, CRM... todo integrado y funcionando en días.",
+    title: "Implementación",
+    subtitle: "Construimos la solución",
+    description:
+      "Diseñamos e implementamos las herramientas a medida: chatbots, web corporativa, CRM y automatizaciones — todo integrado.",
   },
   {
     num: "03",
     icon: Rocket,
-    title: "Resultados & Optimización",
-    description: "Monitorizamos métricas en tiempo real y optimizamos continuamente para maximizar tu retorno de inversión.",
+    title: "Resultados",
+    subtitle: "Optimizamos y escalamos",
+    description:
+      "Monitorizamos métricas clave en tiempo real y optimizamos continuamente para maximizar tu retorno de inversión.",
   },
 ];
 
 const Process = () => {
   return (
-    <section id="proceso" className="py-20 bg-gradient-hero relative overflow-hidden">
-      <div className="absolute inset-0 grid-tech opacity-20" />
-      <div className="container mx-auto px-4 relative z-10">
+    <section id="proceso" className="py-24">
+      <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-            Cómo <span className="text-gradient-gold">Trabajamos</span>
+          <span className="inline-block px-3 py-1 rounded-full bg-gold/10 text-gold text-sm font-medium mb-4">
+            Método
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            Un proceso <span className="text-gradient-gold">simple y efectivo</span>
           </h2>
-          <p className="text-primary-foreground/60 max-w-2xl mx-auto">
-            Un proceso simple y efectivo para transformar tu negocio digital.
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+            De la idea a los resultados en tres pasos claros, sin complicaciones.
           </p>
         </div>
 
@@ -39,21 +47,22 @@ const Process = () => {
           {steps.map((step, i) => (
             <div
               key={i}
-              className={`animate-fade-up delay-${(i + 1) * 200} relative text-center`}
+              className={`animate-fade-up delay-${(i + 1) * 200} relative`}
             >
-              <div className="relative inline-flex mb-6">
-                <div className="w-20 h-20 rounded-2xl bg-navy-light/50 border border-gold/20 flex items-center justify-center">
-                  <step.icon className="h-8 w-8 text-gold" />
-                </div>
-                <span className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-gradient-gold flex items-center justify-center text-sm font-bold text-accent-foreground shadow-gold">
+              <div className="relative p-8 rounded-2xl bg-card border border-border hover:border-gold/30 shadow-card hover:shadow-card-hover transition-all duration-300 text-center h-full">
+                <span className="absolute -top-4 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-gradient-gold flex items-center justify-center text-sm font-bold text-accent-foreground shadow-gold">
                   {step.num}
                 </span>
+                <div className="w-16 h-16 rounded-2xl bg-gold/10 flex items-center justify-center mx-auto mb-5 mt-3">
+                  <step.icon className="h-8 w-8 text-gold" />
+                </div>
+                <h3 className="text-xl font-bold text-foreground mb-1">{step.title}</h3>
+                <p className="text-sm text-gold font-medium mb-3">{step.subtitle}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
               </div>
-              <h3 className="text-xl font-semibold text-primary-foreground mb-3">{step.title}</h3>
-              <p className="text-primary-foreground/50 text-sm">{step.description}</p>
 
               {i < steps.length - 1 && (
-                <div className="hidden md:block absolute top-10 right-0 translate-x-1/2 w-16 border-t-2 border-dashed border-gold/30" />
+                <div className="hidden md:block absolute top-1/2 -right-4 translate-x-0 w-8 border-t-2 border-dashed border-gold/30" />
               )}
             </div>
           ))}
