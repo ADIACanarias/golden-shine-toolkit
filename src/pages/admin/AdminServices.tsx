@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { services as mockServices } from "@/data/mockData";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { Switch } from "@/components/ui/switch";
 import { MessageSquare, Globe, Users, Mail, BarChart3, Zap, Lightbulb } from "lucide-react";
 
@@ -8,11 +8,24 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 };
 
 const AdminServices = () => {
-  const [services, setServices] = useState(mockServices);
+  const queryClient = useQueryClient();
 
-  const toggleActive = (id: string) => {
-    setServices(services.map((s) => (s.id === id ? { ...s, is_active: !s.is_active } : s)));
-  };
+  const { data: services = [] } = useQuery({
+    queryKey: ["admin-services"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("services").select("*");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const toggleMutation = useMutation({
+    mutationFn: async ({ id, is_active }: { id: string; is_active: boolean }) => {
+      const { error } = await supabase.from("services").update({ is_active }).eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["admin-services"] }),
+  });
 
   return (
     <div className="space-y-6">
@@ -32,7 +45,10 @@ const AdminServices = () => {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-xs text-muted-foreground">{service.is_active ? "Activo" : "Inactivo"}</span>
-                <Switch checked={service.is_active} onCheckedChange={() => toggleActive(service.id)} />
+                <Switch
+                  checked={service.is_active}
+                  onCheckedChange={(checked) => toggleMutation.mutate({ id: service.id, is_active: checked })}
+                />
               </div>
             </div>
           );

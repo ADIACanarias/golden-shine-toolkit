@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Zap, Eye, EyeOff } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,18 +18,16 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
 
-    // Mock login — replace with Supabase Auth
-    await new Promise((r) => setTimeout(r, 800));
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
 
-    if (email === "admin@digitalboost.com" && password === "admin123") {
-      localStorage.setItem("isAuthenticated", "true");
-      navigate("/admin");
-    } else {
+    if (error) {
       toast({
         title: "Error de autenticación",
-        description: "Email o contraseña incorrectos.",
+        description: error.message,
         variant: "destructive",
       });
+    } else {
+      navigate("/admin");
     }
     setLoading(false);
   };
@@ -58,7 +57,7 @@ const Login = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@digitalboost.com"
+                placeholder="tu@email.com"
                 className="bg-navy/50 border-navy-light/30 text-primary-foreground placeholder:text-primary-foreground/30"
               />
             </div>
@@ -86,10 +85,6 @@ const Login = () => {
               {loading ? "Entrando..." : "Entrar"}
             </Button>
           </form>
-
-          <p className="text-xs text-primary-foreground/30 text-center mt-4">
-            Demo: admin@digitalboost.com / admin123
-          </p>
         </div>
       </div>
     </div>

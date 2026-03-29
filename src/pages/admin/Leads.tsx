@@ -1,11 +1,15 @@
 import { useState } from "react";
-import { leads as mockLeads } from "@/data/mockData";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Search, Eye, MessageCircle } from "lucide-react";
+import type { Database } from "@/integrations/supabase/types";
+
+type Lead = Database["public"]["Tables"]["leads"]["Row"];
 
 const statusColors: Record<string, string> = {
   new: "bg-blue-500/10 text-blue-600",
@@ -26,20 +30,37 @@ const statusLabels: Record<string, string> = {
 };
 
 const Leads = () => {
-  const [leads, setLeads] = useState(mockLeads);
+  const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [selected, setSelected] = useState<typeof mockLeads[0] | null>(null);
+  const [selected, setSelected] = useState<Lead | null>(null);
+
+  const { data: leads = [] } = useQuery({
+    queryKey: ["admin-leads"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("leads").select("*").order("created_at", { ascending: false });
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const updateStatusMutation = useMutation({
+    mutationFn: async ({ id, status }: { id: string; status: string }) => {
+      const { error } = await supabase.from("leads").update({ status }).eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["admin-leads"] }),
+  });
 
   const filtered = leads.filter((l) => {
     const matchSearch = l.name.toLowerCase().includes(search.toLowerCase()) ||
-      l.company.toLowerCase().includes(search.toLowerCase());
+      (l.company || "").toLowerCase().includes(search.toLowerCase());
     const matchStatus = statusFilter === "all" || l.status === statusFilter;
     return matchSearch && matchStatus;
   });
 
   const updateStatus = (id: string, status: string) => {
-    setLeads(leads.map((l) => (l.id === id ? { ...l, status } : l)));
+    updateStatusMutation.mutate({ id, status });
     if (selected?.id === id) setSelected({ ...selected, status });
   };
 
@@ -105,7 +126,6 @@ const Leads = () => {
         </div>
       </div>
 
-      {/* Lead detail modal */}
       <Dialog open={!!selected} onOpenChange={() => setSelected(null)}>
         <DialogContent className="max-w-lg">
           <DialogHeader>
