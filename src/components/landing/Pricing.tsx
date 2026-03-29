@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
+import { Check, Info } from "lucide-react";
 
 const whatsappPlans = [
   {
@@ -53,7 +53,7 @@ const PricingTable = ({ title, plans }: { title: string; plans: typeof whatsappP
       {plans.map((plan, i) => (
         <div
           key={i}
-          className={`animate-fade-up delay-${(i + 1) * 100} relative p-8 rounded-2xl bg-card transition-all duration-300 ${
+          className={`animate-fade-up relative p-8 rounded-2xl bg-card transition-all duration-300 ${
             plan.popular
               ? "border-2 border-gold shadow-gold scale-[1.02]"
               : "border border-border hover:border-gold/30 shadow-card"
@@ -113,6 +113,40 @@ const Pricing = () => {
         </div>
         <PricingTable title="📱 Automatización WhatsApp" plans={whatsappPlans} />
         <PricingTable title="🌐 Desarrollo Web Profesional" plans={webPlans} />
+
+        {/* Maintenance add-on */}
+        <div className="max-w-3xl mx-auto mt-4 p-8 rounded-2xl bg-card border border-gold/20 shadow-card">
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="px-2 py-0.5 rounded-full bg-gold/10 text-gold text-xs font-semibold">Opcional</span>
+                <h3 className="text-xl font-bold text-foreground">Gestión y Mantenimiento Web</h3>
+              </div>
+              <p className="text-muted-foreground text-sm mb-3">
+                Delega la digitalización de tu negocio: actualizaciones, seguridad, hosting, soporte técnico y modificaciones menores incluidas. Tú céntrate en tu negocio, nosotros nos ocupamos de tu web.
+              </p>
+              <div className="flex items-start gap-2 text-xs text-muted-foreground/80 bg-muted/50 rounded-lg p-3">
+                <Info className="h-4 w-4 text-gold flex-shrink-0 mt-0.5" />
+                <span>
+                  <strong className="text-foreground">Tu web es tuya.</strong> No hay permanencia ni ataduras. Si decides gestionar tu web por tu cuenta, te la entregamos sin problema. El servicio de mantenimiento es 100% opcional.
+                </span>
+              </div>
+            </div>
+            <div className="text-center md:text-right flex-shrink-0">
+              <div className="flex items-baseline justify-center md:justify-end gap-1 mb-1">
+                <span className="text-4xl font-extrabold text-foreground">29,90€</span>
+                <span className="text-muted-foreground text-sm">/mes</span>
+              </div>
+              <p className="text-xs text-muted-foreground mb-4">por web contratada</p>
+              <Button
+                variant="gold-outline"
+                onClick={() => document.querySelector("#contacto")?.scrollIntoView({ behavior: "smooth" })}
+              >
+                Más información
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
