@@ -68,7 +68,7 @@ const LeadForm = () => {
       {/* BG image */}
       <div className="absolute inset-0">
         <img src={ctaBg} alt="" className="w-full h-full object-cover" loading="lazy" width={1920} height={768} />
-        <div className="absolute inset-0 bg-[hsl(215,60%,8%)/0.9]" />
+        <div className="absolute inset-0 bg-navy-dark/90" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
