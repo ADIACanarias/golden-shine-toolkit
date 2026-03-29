@@ -4,9 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Send } from "lucide-react";
+import { Send, Phone, Mail, MapPin } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import ctaBg from "@/assets/cta-bg.jpg";
 
 const LeadForm = () => {
   const { toast } = useToast();
@@ -63,19 +64,65 @@ const LeadForm = () => {
   };
 
   return (
-    <section id="contacto" className="py-20">
-      <div className="container mx-auto px-4">
-        <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Solicita tu <span className="text-gradient-gold">Diagnóstico Gratuito</span>
-            </h2>
-            <p className="text-muted-foreground">
-              Analizamos tu negocio y te proponemos un plan de acción sin compromiso.
-            </p>
+    <section id="contacto" className="py-24 relative overflow-hidden">
+      {/* BG image */}
+      <div className="absolute inset-0">
+        <img src={ctaBg} alt="" className="w-full h-full object-cover" loading="lazy" width={1920} height={768} />
+        <div className="absolute inset-0 bg-[hsl(215,60%,8%)/0.9]" />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-16 max-w-6xl mx-auto items-start">
+          {/* Left info */}
+          <div className="space-y-8">
+            <div>
+              <span className="inline-block px-3 py-1 rounded-full bg-gold/10 text-gold text-sm font-medium mb-4">
+                Contacto
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
+                Solicita tu <span className="text-gradient-gold">Diagnóstico Gratuito</span>
+              </h2>
+              <p className="text-primary-foreground/60 text-lg leading-relaxed">
+                Analizamos tu negocio y te proponemos un plan de acción personalizado, sin compromiso ni coste.
+              </p>
+            </div>
+
+            <div className="space-y-5">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center flex-shrink-0">
+                  <Phone className="h-5 w-5 text-gold" />
+                </div>
+                <div>
+                  <p className="text-primary-foreground/40 text-sm">Teléfono</p>
+                  <p className="text-primary-foreground font-medium">+34 900 123 456</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center flex-shrink-0">
+                  <Mail className="h-5 w-5 text-gold" />
+                </div>
+                <div>
+                  <p className="text-primary-foreground/40 text-sm">Email</p>
+                  <p className="text-primary-foreground font-medium">info@digitalboost.es</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center flex-shrink-0">
+                  <MapPin className="h-5 w-5 text-gold" />
+                </div>
+                <div>
+                  <p className="text-primary-foreground/40 text-sm">Oficina</p>
+                  <p className="text-primary-foreground font-medium">Madrid, España</p>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Right form */}
+          <form
+            onSubmit={handleSubmit}
+            className="p-8 rounded-2xl bg-card/95 backdrop-blur-sm border border-border shadow-card space-y-4"
+          >
             <div className="grid md:grid-cols-2 gap-4">
               <Input
                 placeholder="Nombre completo *"
@@ -85,7 +132,7 @@ const LeadForm = () => {
               />
               <Input
                 type="email"
-                placeholder="Email *"
+                placeholder="Email corporativo *"
                 required
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -98,7 +145,7 @@ const LeadForm = () => {
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
               />
               <Input
-                placeholder="Empresa"
+                placeholder="Nombre de la empresa"
                 value={form.company}
                 onChange={(e) => setForm({ ...form, company: e.target.value })}
               />
@@ -119,18 +166,20 @@ const LeadForm = () => {
               </SelectContent>
             </Select>
             <Textarea
-              placeholder="Cuéntanos sobre tu negocio y tus objetivos..."
+              placeholder="Cuéntanos sobre tu empresa y sus objetivos comerciales..."
               rows={4}
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
             />
             <Button variant="gold" size="lg" className="w-full" type="submit" disabled={loading}>
-              {loading ? "Enviando..." : "Enviar Diagnóstico Gratis"}
+              {loading ? "Enviando..." : "Solicitar Diagnóstico Gratuito"}
               <Send className="ml-2 h-4 w-4" />
             </Button>
             <p className="text-xs text-muted-foreground text-center">
               Al enviar aceptas nuestra{" "}
-              <a href="/privacidad" className="text-gold hover:underline">política de privacidad</a>.
+              <a href="/privacidad" className="text-gold hover:underline">
+                política de privacidad
+              </a>.
             </p>
           </form>
         </div>
