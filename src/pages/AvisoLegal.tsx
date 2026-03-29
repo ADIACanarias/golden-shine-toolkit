@@ -5,7 +5,7 @@ const AvisoLegal = () => (
       <div className="prose prose-sm text-muted-foreground space-y-6">
         <section>
           <h2 className="text-xl font-semibold text-foreground">1. Datos identificativos</h2>
-          <p>En cumplimiento con el deber de información recogido en artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y del Comercio Electrónico, DigitalBoost informa que es titular del presente sitio web.</p>
+          <p>En cumplimiento con el deber de información recogido en artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y del Comercio Electrónico, AD IA Canarias informa que es titular del presente sitio web.</p>
         </section>
         <section>
           <h2 className="text-xl font-semibold text-foreground">2. Propiedad intelectual</h2>
@@ -13,7 +13,7 @@ const AvisoLegal = () => (
         </section>
         <section>
           <h2 className="text-xl font-semibold text-foreground">3. Condiciones de uso</h2>
-          <p>El usuario se compromete a hacer un uso adecuado de los contenidos y servicios que DigitalBoost ofrece a través de su sitio web y a no emplearlos para actividades ilícitas o contrarias a la buena fe.</p>
+          <p>El usuario se compromete a hacer un uso adecuado de los contenidos y servicios que AD IA Canarias ofrece a través de su sitio web y a no emplearlos para actividades ilícitas o contrarias a la buena fe.</p>
         </section>
         <section>
           <h2 className="text-xl font-semibold text-foreground">4. Legislación aplicable</h2>

@@ -103,7 +103,7 @@ const LeadForm = () => {
                 </div>
                 <div>
                   <p className="text-primary-foreground/40 text-sm">Email</p>
-                  <p className="text-primary-foreground font-medium">info@digitalboost.es</p>
+                  <p className="text-primary-foreground font-medium">info@adiacanarias.es</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -112,7 +112,7 @@ const LeadForm = () => {
                 </div>
                 <div>
                   <p className="text-primary-foreground/40 text-sm">Oficina</p>
-                  <p className="text-primary-foreground font-medium">Madrid, España</p>
+                  <p className="text-primary-foreground font-medium">Las Palmas de Gran Canaria</p>
                 </div>
               </div>
             </div>

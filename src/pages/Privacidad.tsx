@@ -5,7 +5,7 @@ const Privacidad = () => (
       <div className="prose prose-sm text-muted-foreground space-y-6">
         <section>
           <h2 className="text-xl font-semibold text-foreground">1. Responsable del tratamiento</h2>
-          <p>DigitalBoost es responsable del tratamiento de los datos personales del usuario y le informa que estos datos serán tratados de conformidad con lo dispuesto en el Reglamento (UE) 2016/679 (RGPD).</p>
+          <p>AD IA Canarias es responsable del tratamiento de los datos personales del usuario y le informa que estos datos serán tratados de conformidad con lo dispuesto en el Reglamento (UE) 2016/679 (RGPD).</p>
         </section>
         <section>
           <h2 className="text-xl font-semibold text-foreground">2. Finalidad del tratamiento</h2>
@@ -21,7 +21,7 @@ const Privacidad = () => (
         </section>
         <section>
           <h2 className="text-xl font-semibold text-foreground">5. Derechos del usuario</h2>
-          <p>El usuario podrá ejercer sus derechos de acceso, rectificación, supresión, oposición, limitación del tratamiento y portabilidad de datos dirigiéndose a DigitalBoost mediante email.</p>
+          <p>El usuario podrá ejercer sus derechos de acceso, rectificación, supresión, oposición, limitación del tratamiento y portabilidad de datos dirigiéndose a AD IA Canarias mediante email.</p>
         </section>
         <section>
           <h2 className="text-xl font-semibold text-foreground">6. Cookies</h2>

@@ -31,7 +31,7 @@ const AdminLayout = () => {
           <div className="p-4 border-b border-navy-light/20 flex items-center justify-between">
             <a href="/" className="flex items-center gap-2 text-primary-foreground font-bold text-lg">
               <Zap className="h-5 w-5 text-gold" />
-              Digital<span className="text-gold">Boost</span>
+              AD <span className="text-gold">IA</span> Canarias
             </a>
             <button className="lg:hidden text-primary-foreground" onClick={() => setSidebarOpen(false)}>
               <X className="h-5 w-5" />
