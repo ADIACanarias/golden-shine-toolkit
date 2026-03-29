@@ -53,19 +53,19 @@ const PricingTable = ({ title, plans }: { title: string; plans: typeof whatsappP
       {plans.map((plan, i) => (
         <div
           key={i}
-          className={`animate-fade-up delay-${(i + 1) * 100} relative p-6 rounded-xl bg-card shadow-card transition-all duration-300 ${
+          className={`animate-fade-up delay-${(i + 1) * 100} relative p-8 rounded-2xl bg-card transition-all duration-300 ${
             plan.popular
-              ? "border-2 border-gold shadow-gold"
-              : "border border-border hover:border-gold/30"
+              ? "border-2 border-gold shadow-gold scale-[1.02]"
+              : "border border-border hover:border-gold/30 shadow-card"
           }`}
         >
           {plan.popular && (
-            <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-gradient-gold text-accent-foreground text-xs font-semibold rounded-full shadow-gold">
+            <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-gold text-accent-foreground text-xs font-semibold rounded-full shadow-gold">
               Más popular
             </span>
           )}
-          <div className="text-center mb-6">
-            <h4 className="text-lg font-semibold text-foreground mb-2">{plan.name}</h4>
+          <div className="text-center mb-8">
+            <h4 className="text-lg font-semibold text-foreground mb-3">{plan.name}</h4>
             <div className="flex items-baseline justify-center gap-1">
               <span className="text-4xl font-extrabold text-foreground">{plan.price}€</span>
               <span className="text-muted-foreground text-sm">
@@ -73,10 +73,12 @@ const PricingTable = ({ title, plans }: { title: string; plans: typeof whatsappP
               </span>
             </div>
           </div>
-          <ul className="space-y-3 mb-6">
+          <ul className="space-y-3 mb-8">
             {plan.features.map((f, j) => (
-              <li key={j} className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Check className="h-4 w-4 text-gold flex-shrink-0" />
+              <li key={j} className="flex items-center gap-3 text-sm text-muted-foreground">
+                <div className="w-5 h-5 rounded-full bg-gold/10 flex items-center justify-center flex-shrink-0">
+                  <Check className="h-3 w-3 text-gold" />
+                </div>
                 {f}
               </li>
             ))}
@@ -96,18 +98,21 @@ const PricingTable = ({ title, plans }: { title: string; plans: typeof whatsappP
 
 const Pricing = () => {
   return (
-    <section id="precios" className="py-20">
+    <section id="precios" className="py-24">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
+          <span className="inline-block px-3 py-1 rounded-full bg-gold/10 text-gold text-sm font-medium mb-4">
+            Precios
+          </span>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Planes y <span className="text-gradient-gold">Precios</span>
+            Inversión <span className="text-gradient-gold">transparente</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Transparentes, sin sorpresas. Elige el plan que mejor se adapte a tu negocio.
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+            Sin sorpresas ni letra pequeña. Elige el plan que mejor se adapte al tamaño de tu empresa.
           </p>
         </div>
-        <PricingTable title="📱 WhatsApp Automation" plans={whatsappPlans} />
-        <PricingTable title="🌐 Diseño Web" plans={webPlans} />
+        <PricingTable title="📱 Automatización WhatsApp" plans={whatsappPlans} />
+        <PricingTable title="🌐 Desarrollo Web Profesional" plans={webPlans} />
       </div>
     </section>
   );

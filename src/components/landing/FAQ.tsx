@@ -21,14 +21,17 @@ const FAQ = () => {
   });
 
   return (
-    <section id="faq" className="py-20 bg-surface">
+    <section id="faq" className="py-24 bg-surface">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
+          <span className="inline-block px-3 py-1 rounded-full bg-gold/10 text-gold text-sm font-medium mb-4">
+            FAQ
+          </span>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Preguntas <span className="text-gradient-gold">Frecuentes</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Resolvemos tus dudas más comunes.
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+            Todo lo que necesitas saber antes de dar el paso hacia la digitalización.
           </p>
         </div>
 
@@ -40,10 +43,10 @@ const FAQ = () => {
                 value={faq.id}
                 className="bg-card border border-border rounded-xl px-6 data-[state=open]:border-gold/30 transition-colors"
               >
-                <AccordionTrigger className="text-left font-medium text-foreground hover:text-gold transition-colors">
+                <AccordionTrigger className="text-left font-medium text-foreground hover:text-gold transition-colors py-5">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground text-sm">
+                <AccordionContent className="text-muted-foreground text-sm leading-relaxed pb-5">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
