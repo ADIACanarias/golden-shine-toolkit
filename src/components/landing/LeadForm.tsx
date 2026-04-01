@@ -122,8 +122,8 @@ const LeadForm = ({ selectedPlan = "" }: LeadFormProps) => {
                   <MapPin className="h-5 w-5 text-gold" />
                 </div>
                 <div>
-                  <p className="text-primary-foreground/40 text-sm">Oficina</p>
-                  <p className="text-primary-foreground font-medium">Las Palmas de Gran Canaria</p>
+                  <p className="text-primary-foreground/40 text-sm">Ubicación</p>
+                  <p className="text-primary-foreground font-medium">Islas Canarias, España</p>
                 </div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import { Zap, Instagram, Linkedin, Twitter, ArrowRight } from "lucide-react";
+import { Zap, Instagram, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Footer = () => {
@@ -84,14 +84,8 @@ const Footer = () => {
             </ul>
             <h4 className="font-semibold text-primary-foreground mb-3 text-sm uppercase tracking-wider">Síguenos</h4>
             <div className="flex gap-3">
-              <a href="#" className="w-9 h-9 rounded-lg bg-navy-light/50 border border-navy-light/30 flex items-center justify-center text-primary-foreground/50 hover:text-gold hover:border-gold/30 transition-colors">
+              <a href="https://www.instagram.com/ad.ia.canarias" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-navy-light/50 border border-navy-light/30 flex items-center justify-center text-primary-foreground/50 hover:text-gold hover:border-gold/30 transition-colors">
                 <Instagram className="h-4 w-4" />
-              </a>
-              <a href="#" className="w-9 h-9 rounded-lg bg-navy-light/50 border border-navy-light/30 flex items-center justify-center text-primary-foreground/50 hover:text-gold hover:border-gold/30 transition-colors">
-                <Linkedin className="h-4 w-4" />
-              </a>
-              <a href="#" className="w-9 h-9 rounded-lg bg-navy-light/50 border border-navy-light/30 flex items-center justify-center text-primary-foreground/50 hover:text-gold hover:border-gold/30 transition-colors">
-                <Twitter className="h-4 w-4" />
               </a>
             </div>
           </div>
