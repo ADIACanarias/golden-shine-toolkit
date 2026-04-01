@@ -1,17 +1,30 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { Star, Quote } from "lucide-react";
 
-const Testimonials = () => {
-  const { data: testimonials = [] } = useQuery({
-    queryKey: ["testimonials"],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("testimonials").select("*");
-      if (error) throw error;
-      return data;
-    },
-  });
+const testimonials = [
+  {
+    id: 1,
+    name: "Roberto Santana",
+    company: "Clínica Dental Tenerife Sur",
+    text: "Desde que instalaron el chatbot de WhatsApp, gestionamos el doble de citas sin contratar más personal. En 3 semanas ya habíamos recuperado la inversión.",
+    rating: 5,
+  },
+  {
+    id: 2,
+    name: "Laura Henríquez",
+    company: "Inmobiliaria Atlántico GC",
+    text: "La nueva web nos genera leads de forma constante. Antes dependíamos solo del boca a boca. Ahora recibimos consultas cada día sin hacer nada extra.",
+    rating: 5,
+  },
+  {
+    id: 3,
+    name: "Miguel Trujillo",
+    company: "Grupo Hostelero Las Palmas",
+    text: "Automatizaron nuestras reservas y las respuestas a clientes por WhatsApp. Mi equipo ahorra horas cada día y los clientes están mucho más satisfechos.",
+    rating: 5,
+  },
+];
 
+const Testimonials = () => {
   return (
     <section id="testimonios" className="py-24 bg-gradient-hero relative overflow-hidden">
       <div className="absolute inset-0 grid-tech opacity-10" />
@@ -21,10 +34,10 @@ const Testimonials = () => {
             Testimonios
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-            Empresas que ya <span className="text-gradient-gold">confían</span> en nosotros
+            Negocios que ya <span className="text-gradient-gold">confían</span> en nosotros
           </h2>
           <p className="text-primary-foreground/60 max-w-2xl mx-auto text-lg">
-            Resultados reales de negocios como el tuyo que han transformado sus procesos comerciales.
+            Resultados reales de empresas canarias que han transformado sus procesos comerciales.
           </p>
         </div>
 
