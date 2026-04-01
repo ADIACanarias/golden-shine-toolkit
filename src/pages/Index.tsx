@@ -3,6 +3,7 @@ import Header from "@/components/landing/Header";
 import Hero from "@/components/landing/Hero";
 import PainPoints from "@/components/landing/PainPoints";
 import Services from "@/components/landing/Services";
+import Agents from "@/components/landing/Agents";
 import Process from "@/components/landing/Process";
 import BusinessTypes from "@/components/landing/BusinessTypes";
 import Pricing from "@/components/landing/Pricing";
@@ -27,6 +28,7 @@ const Index = () => {
       <Hero />
       <PainPoints />
       <Services />
+      <Agents onSelectPlan={handleSelectPlan} />
       <Process />
       <BusinessTypes />
       <Pricing onSelectPlan={handleSelectPlan} />

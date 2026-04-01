@@ -1,14 +1,42 @@
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, TrendingUp, Users, Zap } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
-const stats = [
-  { value: "+200", label: "Empresas confían en nosotros", icon: Users },
-  { value: "3x", label: "Más conversiones de media", icon: TrendingUp },
-  { value: "7 días", label: "Para ver resultados", icon: Zap },
-];
+const useCountUp = (target: number, duration = 1800, start = false) => {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!start) return;
+    let startTime: number | null = null;
+    const step = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(eased * target));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [target, duration, start]);
+  return count;
+};
 
 const Hero = () => {
+  const [started, setStarted] = useState(false);
+  const statsRef = useRef<HTMLDivElement>(null);
+
+  const empresas = useCountUp(200, 1800, started);
+  const conversiones = useCountUp(3, 1200, started);
+  const dias = useCountUp(7, 1000, started);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setStarted(true); },
+      { threshold: 0.3 }
+    );
+    if (statsRef.current) observer.observe(statsRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   const scrollTo = (href: string) => {
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
@@ -49,22 +77,43 @@ const Hero = () => {
               Solicitar Diagnóstico Gratuito
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
-            <Button variant="gold-outline" size="lg" onClick={() => scrollTo("#servicios")}>
-              Descubrir Servicios
+            <Button variant="gold-outline" size="lg" onClick={() => scrollTo("#agentes")}>
+              Ver Agentes IA
             </Button>
           </div>
 
-          {/* Stats row */}
-          <div className="animate-fade-up delay-400 grid grid-cols-3 gap-6 pt-8 border-t border-primary-foreground/10 max-w-xl">
-            {stats.map((stat) => (
-              <div key={stat.label} className="flex flex-col gap-1">
-                <div className="flex items-center gap-2">
-                  <stat.icon className="h-4 w-4 text-gold" />
-                  <span className="text-2xl md:text-3xl font-bold text-primary-foreground">{stat.value}</span>
-                </div>
-                <span className="text-xs text-primary-foreground/50">{stat.label}</span>
+          {/* Stats row con contador animado */}
+          <div
+            ref={statsRef}
+            className="animate-fade-up delay-400 grid grid-cols-3 gap-6 pt-8 border-t border-primary-foreground/10 max-w-xl"
+          >
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2">
+                <Users className="h-4 w-4 text-gold" />
+                <span className="text-2xl md:text-3xl font-bold text-primary-foreground">
+                  +{empresas}
+                </span>
               </div>
-            ))}
+              <span className="text-xs text-primary-foreground/50">Empresas confían en nosotros</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-gold" />
+                <span className="text-2xl md:text-3xl font-bold text-primary-foreground">
+                  {conversiones}x
+                </span>
+              </div>
+              <span className="text-xs text-primary-foreground/50">Más conversiones de media</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2">
+                <Zap className="h-4 w-4 text-gold" />
+                <span className="text-2xl md:text-3xl font-bold text-primary-foreground">
+                  {dias} días
+                </span>
+              </div>
+              <span className="text-xs text-primary-foreground/50">Para ver resultados</span>
+            </div>
           </div>
         </div>
       </div>

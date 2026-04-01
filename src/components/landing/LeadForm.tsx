@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,6 +16,7 @@ interface LeadFormProps {
 
 const LeadForm = ({ selectedPlan = "" }: LeadFormProps) => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -65,11 +67,7 @@ const LeadForm = ({ selectedPlan = "" }: LeadFormProps) => {
         variant: "destructive",
       });
     } else {
-      toast({
-        title: "¡Solicitud enviada!",
-        description: "Nos pondremos en contacto contigo en menos de 24 horas.",
-      });
-      setForm({ name: "", email: "", phone: "", company: "", service_interest: "", message: "" });
+      navigate("/gracias");
     }
     setLoading(false);
   };
