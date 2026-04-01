@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Header from "@/components/landing/Header";
 import Hero from "@/components/landing/Hero";
 import PainPoints from "@/components/landing/PainPoints";
@@ -11,6 +12,15 @@ import LeadForm from "@/components/landing/LeadForm";
 import Footer from "@/components/landing/Footer";
 
 const Index = () => {
+  const [selectedPlan, setSelectedPlan] = useState("");
+
+  const handleSelectPlan = (planName: string) => {
+    setSelectedPlan(planName);
+    setTimeout(() => {
+      document.querySelector("#contacto")?.scrollIntoView({ behavior: "smooth" });
+    }, 50);
+  };
+
   return (
     <div className="min-h-screen">
       <Header />
@@ -19,10 +29,10 @@ const Index = () => {
       <Services />
       <Process />
       <BusinessTypes />
-      <Pricing />
+      <Pricing onSelectPlan={handleSelectPlan} />
       <Testimonials />
       <FAQ />
-      <LeadForm />
+      <LeadForm selectedPlan={selectedPlan} />
       <Footer />
     </div>
   );

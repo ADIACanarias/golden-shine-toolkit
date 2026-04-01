@@ -46,7 +46,7 @@ const webPlans = [
   },
 ];
 
-const PricingTable = ({ title, plans }: { title: string; plans: typeof whatsappPlans }) => (
+const PricingTable = ({ title, plans, onSelectPlan }: { title: string; plans: typeof whatsappPlans; onSelectPlan: (name: string) => void }) => (
   <div className="mb-16">
     <h3 className="text-2xl font-bold text-foreground text-center mb-8">{title}</h3>
     <div className="grid md:grid-cols-3 gap-6">
@@ -86,7 +86,7 @@ const PricingTable = ({ title, plans }: { title: string; plans: typeof whatsappP
           <Button
             variant={plan.popular ? "gold" : "gold-outline"}
             className="w-full"
-            onClick={() => document.querySelector("#contacto")?.scrollIntoView({ behavior: "smooth" })}
+            onClick={() => onSelectPlan(plan.name)}
           >
             Empezar ahora
           </Button>
@@ -96,7 +96,11 @@ const PricingTable = ({ title, plans }: { title: string; plans: typeof whatsappP
   </div>
 );
 
-const Pricing = () => {
+interface PricingProps {
+  onSelectPlan: (planName: string) => void;
+}
+
+const Pricing = ({ onSelectPlan }: PricingProps) => {
   return (
     <section id="precios" className="py-24">
       <div className="container mx-auto px-4">
@@ -111,8 +115,8 @@ const Pricing = () => {
             Sin sorpresas ni letra pequeña. Elige el plan que mejor se adapte al tamaño de tu empresa.
           </p>
         </div>
-        <PricingTable title="📱 Automatización WhatsApp" plans={whatsappPlans} />
-        <PricingTable title="🌐 Desarrollo Web Profesional" plans={webPlans} />
+        <PricingTable title="📱 Automatización WhatsApp" plans={whatsappPlans} onSelectPlan={onSelectPlan} />
+        <PricingTable title="🌐 Desarrollo Web Profesional" plans={webPlans} onSelectPlan={onSelectPlan} />
 
         {/* Maintenance add-on */}
         <div className="max-w-3xl mx-auto mt-4 p-8 rounded-2xl bg-card border border-gold/20 shadow-card">
@@ -140,7 +144,7 @@ const Pricing = () => {
               <p className="text-xs text-muted-foreground mb-4">por web contratada</p>
               <Button
                 variant="gold-outline"
-                onClick={() => document.querySelector("#contacto")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() => onSelectPlan("Gestión y Mantenimiento Web")}
               >
                 Más información
               </Button>

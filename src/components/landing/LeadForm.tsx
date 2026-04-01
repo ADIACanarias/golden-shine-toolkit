@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,7 +9,11 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import ctaBg from "@/assets/cta-bg.jpg";
 
-const LeadForm = () => {
+interface LeadFormProps {
+  selectedPlan?: string;
+}
+
+const LeadForm = ({ selectedPlan = "" }: LeadFormProps) => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
@@ -17,9 +21,16 @@ const LeadForm = () => {
     email: "",
     phone: "",
     company: "",
-    service_interest: "",
+    service_interest: selectedPlan,
     message: "",
   });
+
+  // Actualizar plan si cambia desde fuera
+  useEffect(() => {
+    if (selectedPlan) {
+      setForm(f => ({ ...f, service_interest: selectedPlan }));
+    }
+  }, [selectedPlan]);
 
   const { data: services = [] } = useQuery({
     queryKey: ["services"],
