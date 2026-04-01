@@ -94,7 +94,7 @@ const LeadForm = () => {
                 </div>
                 <div>
                   <p className="text-primary-foreground/40 text-sm">Teléfono</p>
-                  <p className="text-primary-foreground font-medium">+34 900 123 456</p>
+                  <p className="text-primary-foreground font-medium">+34 660 833 897</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
