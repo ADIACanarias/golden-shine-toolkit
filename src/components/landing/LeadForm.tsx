@@ -50,7 +50,9 @@ const LeadForm = ({ selectedPlan = "" }: LeadFormProps) => {
     e.preventDefault();
     setLoading(true);
 
+    const leadId = crypto.randomUUID();
     const { error } = await supabase.from("leads").insert({
+      id: leadId,
       name: form.name,
       email: form.email,
       phone: form.phone || null,
@@ -67,6 +69,15 @@ const LeadForm = ({ selectedPlan = "" }: LeadFormProps) => {
         variant: "destructive",
       });
     } else {
+      // Send confirmation email (fire-and-forget)
+      supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "contact-confirmation",
+          recipientEmail: form.email,
+          idempotencyKey: `contact-confirm-${leadId}`,
+          templateData: { name: form.name, service: form.service_interest || undefined },
+        },
+      });
       navigate("/gracias");
     }
     setLoading(false);

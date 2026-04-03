@@ -8,6 +8,7 @@ import Gracias from "./pages/Gracias";
 import Login from "./pages/Login";
 import AvisoLegal from "./pages/AvisoLegal";
 import Privacidad from "./pages/Privacidad";
+import Unsubscribe from "./pages/Unsubscribe";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import AdminLayout from "./components/admin/AdminLayout";
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/gracias" element={<Gracias />} />
           <Route path="/login" element={<Login />} />
           <Route path="/aviso-legal" element={<AvisoLegal />} />
+          <Route path="/unsubscribe" element={<Unsubscribe />} />
           <Route path="/privacidad" element={<Privacidad />} />
           <Route
             path="/admin"
